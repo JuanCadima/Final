@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: paws-and-pause
+    runtime: node
+    buildCommand: npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+        placeholder: "Insert your Supabase Project URL"
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+        placeholder: "Insert your Supabase Public Anon Key"

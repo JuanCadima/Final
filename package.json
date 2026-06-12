@@ -1,0 +1,11 @@
+{
+  "name": "sjd_y_sus_amigos-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix sjd_y_sus_amigos/sjd_y_sus_amigos",
+    "build": "npm run build --prefix sjd_y_sus_amigos/sjd_y_sus_amigos",
+    "start": "npm run start --prefix sjd_y_sus_amigos/sjd_y_sus_amigos",
+    "lint": "npm run lint --prefix sjd_y_sus_amigos/sjd_y_sus_amigos"
+  }
+}

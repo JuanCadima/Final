@@ -1,0 +1,3 @@
+@echo off
+echo Starting development server via npm.cmd to bypass PowerShell execution restrictions...
+npm.cmd run dev --prefix sjd_y_sus_amigos/sjd_y_sus_amigos
