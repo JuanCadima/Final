@@ -63,6 +63,20 @@ function ClientDashboard() {
   const [comment, setComment] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [paymentBooking, setPaymentBooking] = useState<Booking | null>(null);
+  const [paidBookingIds, setPaidBookingIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('paws_payment_') && localStorage.getItem(k) === 'paid');
+    const ids = keys.map(k => k.replace('paws_payment_', ''));
+    setPaidBookingIds(ids);
+  }, []);
+
+  const handleConfirmPayment = (bookingId: string) => {
+    localStorage.setItem('paws_payment_' + bookingId, 'paid');
+    setPaidBookingIds(prev => [...prev, bookingId]);
+    setPaymentBooking(null);
+  };
 
   const handleDeleteAccount = async () => {
     const { error } = await deleteAccount();
@@ -142,18 +156,32 @@ function ClientDashboard() {
                     </div>
                     <div style={{ textAlign: 'right' }}>
                       <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)' }}>${booking.price.toFixed(2)}</div>
-                      <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                      <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: '0.5rem', alignItems: 'center' }}>
                         {booking.status === 'confirmed' && (
-                          <button 
-                            onClick={() => {
-                              setRatingBookingId(ratingBookingId === booking.id ? null : booking.id);
-                              setStars(5);
-                              setComment('');
-                            }} 
-                            style={{ background: 'none', border: 'none', color: '#8a7322', cursor: 'pointer', fontSize: '0.85rem', textDecoration: 'underline', padding: 0 }}
-                          >
-                            ⭐ Calificar
-                          </button>
+                          <>
+                            {paidBookingIds.includes(booking.id) ? (
+                              <span style={{ fontSize: '0.85rem', color: '#5a8a29', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                💵 Pagado
+                              </span>
+                            ) : (
+                              <button 
+                                onClick={() => setPaymentBooking(booking)}
+                                style={{ background: 'none', border: 'none', color: '#2b8a3e', cursor: 'pointer', fontSize: '0.85rem', textDecoration: 'underline', padding: 0 }}
+                              >
+                                💳 Pagar (QR)
+                              </button>
+                            )}
+                            <button 
+                              onClick={() => {
+                                setRatingBookingId(ratingBookingId === booking.id ? null : booking.id);
+                                setStars(5);
+                                setComment('');
+                              }} 
+                              style={{ background: 'none', border: 'none', color: '#8a7322', cursor: 'pointer', fontSize: '0.85rem', textDecoration: 'underline', padding: 0 }}
+                            >
+                              ⭐ Calificar
+                            </button>
+                          </>
                         )}
                         {booking.status !== 'rejected' && (
                           <button 
@@ -308,6 +336,84 @@ function ClientDashboard() {
           </div>
         )}
       </div>
+
+
+      {/* Payment QR Modal */}
+      {paymentBooking && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, width: '100%', height: '100%',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backdropFilter: 'blur(4px)'
+        }}>
+          <div style={{
+            background: '#fff',
+            padding: '2.5rem',
+            borderRadius: '24px',
+            maxWidth: '450px',
+            width: '90%',
+            textAlign: 'center',
+            position: 'relative',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.15)'
+          }}>
+            <button 
+              onClick={() => setPaymentBooking(null)}
+              style={{
+                position: 'absolute',
+                top: '1.5rem', right: '1.5rem',
+                background: 'none', border: 'none',
+                fontSize: '1.5rem', cursor: 'pointer',
+                color: '#666',
+                outline: 'none'
+              }}
+            >
+              ×
+            </button>
+            <h3 style={{ fontSize: '1.55rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', color: '#222', fontWeight: 700 }}>
+              Pago por QR
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1.5rem' }}>
+              Paseo de {paymentBooking.service} con <strong>{paymentBooking.walkerName}</strong>
+            </p>
+
+            <div style={{ background: '#fcfcfc', border: '1px solid #eee', padding: '1.5rem', borderRadius: '16px', display: 'inline-block', marginBottom: '1.5rem' }}>
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=8a7322&data=${encodeURIComponent(`pawsandpause-pay:${paymentBooking.id}:${paymentBooking.price}`)}`} 
+                alt="Código QR de Pago" 
+                style={{ width: '200px', height: '200px', display: 'block', margin: '0 auto' }}
+              />
+              <div style={{ marginTop: '0.75rem', fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                Total a Transferir: ${paymentBooking.price.toFixed(2)}
+              </div>
+            </div>
+
+            <p style={{ fontSize: '0.85rem', color: '#555', lineHeight: '1.4', margin: '0 0 1.5rem 0' }}>
+              Escanea el código QR con tu billetera digital o aplicación bancaria para realizar la transferencia directa al paseador.
+            </p>
+
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button 
+                onClick={() => handleConfirmPayment(paymentBooking.id)}
+                className="btn btn-primary"
+                style={{ padding: '0.6rem 2rem', fontSize: '0.9rem' }}
+              >
+                Confirmar Pago
+              </button>
+              <button 
+                onClick={() => setPaymentBooking(null)}
+                className="btn btn-secondary"
+                style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', background: '#eee', color: '#555', border: 'none' }}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -320,6 +426,13 @@ function WalkerDashboard() {
   const [activeSubTab, setActiveSubTab] = useState<'requests' | 'schedule'>('requests');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [paidBookingIds, setPaidBookingIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('paws_payment_') && localStorage.getItem(k) === 'paid');
+    const ids = keys.map(k => k.replace('paws_payment_', ''));
+    setPaidBookingIds(ids);
+  }, [bookings]);
 
   const handleDeleteAccount = async () => {
     const { error } = await deleteAccount();
@@ -514,8 +627,15 @@ function WalkerDashboard() {
                                   </button>
                                 </div>
                               ) : (
-                                <span style={{ fontSize: '0.8rem', color: '#888' }}>
-                                  {booking.status === 'confirmed' ? 'Reserva Confirmada' : 'Reserva Rechazada'}
+                                <span style={{ fontSize: '0.8rem', color: '#888', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                                  <span>{booking.status === 'confirmed' ? 'Reserva Confirmada' : 'Reserva Rechazada'}</span>
+                                  {booking.status === 'confirmed' && (
+                                    paidBookingIds.includes(booking.id) ? (
+                                      <span style={{ color: '#5a8a29', fontWeight: 600 }}>💵 Pagado</span>
+                                    ) : (
+                                      <span style={{ color: '#9c750b', fontWeight: 600 }}>🕒 Pendiente de Pago</span>
+                                    )
+                                  )}
                                 </span>
                               )}
                             </div>
@@ -555,7 +675,14 @@ function WalkerDashboard() {
                                   <strong style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>{booking.time}</strong>
                                   <span style={{ fontSize: '0.9rem', color: '#666', marginLeft: '0.5rem' }}>({booking.date})</span>
                                 </div>
-                                <span style={{ background: '#eafaf1', color: '#2ecc71', padding: '2px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600 }}>Confirmado</span>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                  {paidBookingIds.includes(booking.id) ? (
+                                    <span style={{ background: '#dff2cc', color: '#5a8a29', padding: '2px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600 }}>💵 Pagado</span>
+                                  ) : (
+                                    <span style={{ background: '#faeab1', color: '#9c750b', padding: '2px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600 }}>🕒 Pendiente de Pago</span>
+                                  )}
+                                  <span style={{ background: '#eafaf1', color: '#2ecc71', padding: '2px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600 }}>Confirmado</span>
+                                </div>
                               </div>
                               <div style={{ fontSize: '0.95rem', marginBottom: '0.75rem' }}>
                                 Servicio: <strong>{booking.service}</strong> • Pago: <strong>${booking.price.toFixed(2)}</strong>
