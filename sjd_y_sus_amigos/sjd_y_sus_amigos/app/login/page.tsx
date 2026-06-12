@@ -130,30 +130,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Real vs Mock database switch */}
-          <div style={{
-            background: '#fcfaf5', border: '1px solid #eae5d8', padding: '0.75rem 1rem',
-            borderRadius: '16px', display: 'flex', justifyContent: 'space-between',
-            alignItems: 'center', marginBottom: '1.5rem', fontSize: '0.8rem'
-          }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <strong style={{ color: '#333' }}>Conectividad de Base de Datos</strong>
-              <span style={{ color: isMockMode ? '#8a5e12' : '#3c7a25', fontWeight: 500, fontSize: '0.75rem' }}>
-                {isMockMode ? '📴 Base de datos Mock (Local/Pruebas)' : '🔌 Supabase Real Conectado'}
-              </span>
-            </div>
-            <button
-              onClick={() => toggleMockMode(!isMockMode)}
-              style={{
-                background: isMockMode ? 'var(--accent-brown)' : '#eae5d8',
-                color: isMockMode ? '#fff' : '#444',
-                border: 'none', borderRadius: '8px', padding: '4px 10px',
-                cursor: 'pointer', fontWeight: 600, fontSize: '0.75rem', transition: 'all 0.2s'
-              }}
-            >
-              Cambiar
-            </button>
-          </div>
+
 
           {/* Notifications */}
           {errorMsg && (
@@ -290,68 +267,92 @@ export default function LoginPage() {
 
           {/* Divider */}
           <div style={{
-            display: 'flex', alignItems: 'center', margin: '2rem 0',
-            fontSize: '0.75rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px'
+            display: 'flex', alignItems: 'center', margin: '2rem 0 1.25rem',
+            fontSize: '0.75rem', color: '#8c7355', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600
           }}>
-            <div style={{ flex: 1, height: '1px', background: '#eaeaea' }}></div>
-            <span style={{ padding: '0 10px' }}>Acceso Rápido Demo</span>
-            <div style={{ flex: 1, height: '1px', background: '#eaeaea' }}></div>
+            <div style={{ flex: 1, height: '1px', background: '#eae5d8' }}></div>
+            <span style={{ padding: '0 12px' }}>Acceso Rápido Demo</span>
+            <div style={{ flex: 1, height: '1px', background: '#eae5d8' }}></div>
           </div>
 
-          {/* Quick login buttons */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          {/* Quick login grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
             <button
               onClick={() => handleQuickDemo('client')}
               style={{
-                background: '#fcfaf5', border: '1px solid #e5e0d3', borderRadius: '12px',
-                padding: '0.75rem', cursor: 'pointer', transition: 'all 0.2s', display: 'flex',
-                alignItems: 'center', gap: '10px', width: '100%', textAlign: 'left'
+                background: '#fcfaf5', border: '1px solid #e5e0d3', borderRadius: '16px',
+                padding: '0.75rem 0.5rem', cursor: 'pointer', transition: 'all 0.2s ease',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                gap: '6px', textAlign: 'center', outline: 'none'
               }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = '#fdf5ef'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = '#fcfaf5'}
+              onMouseEnter={e => {
+                e.currentTarget.style.backgroundColor = '#fdf5ef';
+                e.currentTarget.style.borderColor = 'var(--accent-brown)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.backgroundColor = '#fcfaf5';
+                e.currentTarget.style.borderColor = '#e5e0d3';
+                e.currentTarget.style.transform = 'none';
+              }}
             >
-              <span style={{ background: '#dff2cc', width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem' }}>🦮</span>
-              <div style={{ flex: 1 }}>
-                <strong style={{ fontSize: '0.8rem', color: '#111', display: 'block' }}>Entrar como Cliente Demo</strong>
-                <span style={{ fontSize: '0.7rem', color: '#666' }}>Ver panel de reservas y mis mascotas</span>
+              <span style={{ background: '#dff2cc', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>🦮</span>
+              <div>
+                <strong style={{ fontSize: '0.75rem', color: '#111', display: 'block', fontWeight: 700 }}>Cliente</strong>
+                <span style={{ fontSize: '0.6rem', color: '#777' }}>Ver panel</span>
               </div>
-              <span style={{ fontSize: '1rem', color: '#999' }}>→</span>
             </button>
 
             <button
               onClick={() => handleQuickDemo('employee')}
               style={{
-                background: '#fcfaf5', border: '1px solid #e5e0d3', borderRadius: '12px',
-                padding: '0.75rem', cursor: 'pointer', transition: 'all 0.2s', display: 'flex',
-                alignItems: 'center', gap: '10px', width: '100%', textAlign: 'left'
+                background: '#fcfaf5', border: '1px solid #e5e0d3', borderRadius: '16px',
+                padding: '0.75rem 0.5rem', cursor: 'pointer', transition: 'all 0.2s ease',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                gap: '6px', textAlign: 'center', outline: 'none'
               }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = '#fdf5ef'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = '#fcfaf5'}
+              onMouseEnter={e => {
+                e.currentTarget.style.backgroundColor = '#fdf5ef';
+                e.currentTarget.style.borderColor = 'var(--accent-brown)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.backgroundColor = '#fcfaf5';
+                e.currentTarget.style.borderColor = '#e5e0d3';
+                e.currentTarget.style.transform = 'none';
+              }}
             >
-              <span style={{ background: '#e3fafc', width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem' }}>🏃</span>
-              <div style={{ flex: 1 }}>
-                <strong style={{ fontSize: '0.8rem', color: '#111', display: 'block' }}>Entrar como Paseador (Empleado)</strong>
-                <span style={{ fontSize: '0.7rem', color: '#666' }}>Gestionar solicitudes y editar mi perfil</span>
+              <span style={{ background: '#e3fafc', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>🏃</span>
+              <div>
+                <strong style={{ fontSize: '0.75rem', color: '#111', display: 'block', fontWeight: 700 }}>Paseador</strong>
+                <span style={{ fontSize: '0.6rem', color: '#777' }}>Ver horario</span>
               </div>
-              <span style={{ fontSize: '1rem', color: '#999' }}>→</span>
             </button>
 
             <button
               onClick={() => handleQuickDemo('admin')}
               style={{
-                background: '#fcfaf5', border: '1px solid #e5e0d3', borderRadius: '12px',
-                padding: '0.75rem', cursor: 'pointer', transition: 'all 0.2s', display: 'flex',
-                alignItems: 'center', gap: '10px', width: '100%', textAlign: 'left'
+                background: '#fcfaf5', border: '1px solid #e5e0d3', borderRadius: '16px',
+                padding: '0.75rem 0.5rem', cursor: 'pointer', transition: 'all 0.2s ease',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                gap: '6px', textAlign: 'center', outline: 'none'
               }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = '#fdf5ef'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = '#fcfaf5'}
+              onMouseEnter={e => {
+                e.currentTarget.style.backgroundColor = '#fdf5ef';
+                e.currentTarget.style.borderColor = 'var(--accent-brown)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.backgroundColor = '#fcfaf5';
+                e.currentTarget.style.borderColor = '#e5e0d3';
+                e.currentTarget.style.transform = 'none';
+              }}
             >
-              <span style={{ background: '#ffe3e3', width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem' }}>⚙️</span>
-              <div style={{ flex: 1 }}>
-                <strong style={{ fontSize: '0.8rem', color: '#111', display: 'block' }}>Entrar como Administrador Demo</strong>
-                <span style={{ fontSize: '0.7rem', color: '#666' }}>Métricas globales y gestión de roles</span>
+              <span style={{ background: '#ffe3e3', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>⚙️</span>
+              <div>
+                <strong style={{ fontSize: '0.75rem', color: '#111', display: 'block', fontWeight: 700 }}>Admin</strong>
+                <span style={{ fontSize: '0.6rem', color: '#777' }}>Gestionar</span>
               </div>
-              <span style={{ fontSize: '1rem', color: '#999' }}>→</span>
             </button>
           </div>
         </div>
