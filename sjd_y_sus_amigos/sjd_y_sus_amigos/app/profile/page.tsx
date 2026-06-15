@@ -149,6 +149,38 @@ function ProfileContent() {
               ))}
             </div>
           </section>
+
+          {((walker.allowedSizes && walker.allowedSizes.length > 0) || (walker.specialties && walker.specialties.length > 0)) && (
+            <section className="section-box">
+              <h3><div className="section-icon green">🛡️</div> Capacidades y Especialidades</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                {walker.allowedSizes && walker.allowedSizes.length > 0 && (
+                  <div>
+                    <strong style={{ fontSize: '0.9rem', color: '#555', display: 'block', marginBottom: '0.5rem' }}>Tamaños de Perro Autorizados:</strong>
+                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      {walker.allowedSizes.map(size => (
+                        <span key={size} style={{ background: '#e3fafc', color: '#0b7285', padding: '5px 12px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 600 }}>
+                          🐶 {size}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {walker.specialties && walker.specialties.length > 0 && (
+                  <div>
+                    <strong style={{ fontSize: '0.9rem', color: '#555', display: 'block', marginBottom: '0.5rem' }}>Especialidades de Cuidado:</strong>
+                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      {walker.specialties.map(spec => (
+                        <span key={spec} style={{ background: '#f3f0ff', color: '#6f2dbd', padding: '5px 12px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 600 }}>
+                          ✨ {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
           
           <section className="section-box">
             <h3><div className="section-icon">🏷️</div> Servicios y Precios</h3>

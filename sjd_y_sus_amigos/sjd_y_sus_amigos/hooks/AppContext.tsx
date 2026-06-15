@@ -21,6 +21,9 @@ export type Dog = {
   breed: string;
   photoUrl: string;
   userId?: string;
+  age?: string;
+  size?: string;
+  notes?: string;
 };
 
 export type Profile = {
@@ -63,126 +66,15 @@ export type Walker = {
     quote: string;
   }[];
   userId?: string;
+  allowedSizes?: string[];
+  specialties?: string[];
 };
 
-export const MOCK_WALKERS: Walker[] = [
-  {
-    id: 'sarah-mitchell',
-    name: 'Sarah Mitchell',
-    location: 'San Francisco, CA',
-    rating: 5.0,
-    reviewsCount: 148,
-    price: 35,
-    imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400',
-    tags: ['Más Valorada', 'Primeros Auxilios Certificados'],
-    tagline: 'Llevando alegría, ejercicio y una sensación de calma a los miembros peludos de tu familia desde 2018.',
-    aboutParagraphs: [
-      "¡Hola! Soy Sarah, una entusiasta de los animales de toda la vida y compañera canina profesional. Creo que cada perro merece un paseo que no sea solo ejercicio físico, sino también estimulación mental y conexión emocional.",
-      "Comencé Paws&Pause porque noté que muchos dueños de mascotas en la ciudad tenían dificultades para encontrar paseadores que realmente entendieran el comportamiento de los perros y las necesidades de cada raza. Mi enfoque es paciente, amable y siempre centrado en la seguridad y felicidad de tu mascota."
-    ],
-    photos: {
-      large: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=500',
-      sm1: 'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&q=80&w=300',
-      sm2: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=300',
-      tall: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'
-    },
-    experience: [
-      { icon: '✓', bg: '#dff2cc', color: '#5a8a29', title: 'Paseadora de Perros Profesional Certificada', desc: 'Asociación Internacional de Profesionales Caninos (IACP)' },
-      { icon: '✚', bg: '#faeab1', color: '#9c750b', title: 'Certificada en Primeros Auxilios y RCP para Mascotas', desc: 'Certificación de la Cruz Roja (Vigente)' },
-      { icon: '★', bg: '#fcdfc3', color: '#b05f25', title: 'Más de 5 Años de Experiencia Profesional', desc: 'Más de 2500 paseos exitosos completados en San Francisco.' }
-    ],
-    reviews: [
-      {
-        author: "Jessica K. y 'Cooper'",
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100',
-        stars: 5,
-        quote: "Sarah es absolutamente increíble. Cooper solía tener ansiedad cuando me iba a trabajar, pero desde que Sarah comenzó a pasearlo, es otro perro: tranquilo, feliz y claramente muy querido. ¡Sus fotos diarias son lo mejor de mi día!"
-      },
-      {
-        author: "David M. y 'Luna'",
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100',
-        stars: 5,
-        quote: "Extremadamente confiable y comunicativa. Tengo un Husky de alta energía que necesita mucha actividad, y Sarah lo maneja a la perfección. ¡Recomiendo encarecidamente La Hora de la Aventura para dueños de razas grandes!"
-      }
-    ]
-  },
-  {
-    id: 'elena-rodriguez',
-    name: 'Elena Rodriguez',
-    location: 'Oakland, CA',
-    rating: 4.8,
-    reviewsCount: 64,
-    price: 28,
-    imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400',
-    tags: ['Cuidado de Cachorros', 'Trato Delicado'],
-    tagline: 'Paciente y experimentada con perros mayores y cachorros que están aprendiendo a pasear.',
-    aboutParagraphs: [
-      "¡Hola, soy Elena! Tengo una profunda pasión por los cachorros y los perros de edad avanzada que requieren un toque más suave. Entiendo que el mundo puede ser un lugar grande e abrumador para un cachorro o un perro mayor delicado.",
-      "Mis paseos se centran en la seguridad, el refuerzo positivo, los aspectos básicos del entrenamiento con correa y la exploración a ritmo lento adaptada al nivel de comodidad física de tu perro."
-    ],
-    photos: {
-      large: 'https://images.unsplash.com/photo-1541599540903-216a46ca1ad0?auto=format&fit=crop&q=80&w=500',
-      sm1: 'https://images.unsplash.com/photo-1503256207526-0d5d80fa2f47?auto=format&fit=crop&q=80&w=300',
-      sm2: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=300',
-      tall: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'
-    },
-    experience: [
-      { icon: '🍼', bg: '#ffe3e3', color: '#c92a2a', title: 'Experta en Socialización de Cachorros', desc: 'Se enfoca en buenos modales con la correa y en generar confianza al aire libre desde temprana edad.' },
-      { icon: '🩺', bg: '#e3fafc', color: '#0b7285', title: 'Capacitada en Cuidado de Mascotas de Edad Avanzada', desc: 'Entrenada en consideraciones de movilidad articular y administración de medicamentos.' },
-      { icon: '✓', bg: '#dff2cc', color: '#5a8a29', title: 'Cuidadora de Mascotas Certificada', desc: 'Miembro de Pet Sitters International (PSI).' }
-    ],
-    reviews: [
-      {
-        author: "Clara S. y 'Teddy'",
-        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100',
-        stars: 5,
-        quote: "Elena es muy paciente con nuestro Golden Retriever de 3 meses Teddy. ¡Nos ayudó a reforzar su entrenamiento para ir al baño y en su transportadora durante sus paseos, y él la adora!"
-      }
-    ]
-  }
-];
-
-export const MOCK_DOGS: Dog[] = [
-  {
-    id: 'dog-1',
-    name: 'Max',
-    breed: 'Golden Retriever',
-    photoUrl: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=200',
-    userId: 'c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f'
-  },
-  {
-    id: 'dog-2',
-    name: 'Bella',
-    breed: 'French Bulldog',
-    photoUrl: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=200',
-    userId: 'c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f'
-  }
-];
-
-export const MOCK_BOOKINGS: Booking[] = [
-  {
-    id: 'booking-1',
-    walkerName: 'Sarah Mitchell',
-    service: 'Paseo Estándar de 30 min',
-    date: 'Mar 15',
-    time: 'Mediodía',
-    price: 35,
-    status: 'confirmed',
-    userId: 'mock-client-id',
-    walkerId: 'sarah-mitchell'
-  }
-];
-
-export const MOCK_PROFILES: Profile[] = [
-  {
-    id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
-    name: 'Administrador Demo',
-    email: 'admin@pawsandpause.com',
-    role: 'admin',
-    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100&h=100'
-  }
-];
-
+// Clear mock arrays for clean production setup
+export const MOCK_WALKERS: Walker[] = [];
+export const MOCK_DOGS: Dog[] = [];
+export const MOCK_BOOKINGS: Booking[] = [];
+export const MOCK_PROFILES: Profile[] = [];
 
 interface AppContextType {
   walkers: Walker[];
@@ -191,6 +83,7 @@ interface AppContextType {
   isLoading: boolean;
   user: any | null;
   profile: Profile | null;
+  privateProfile: { phone: string; address: string; id_number: string } | null;
   profiles: Profile[]; // admin view
   allBookings: Booking[]; // admin view
   allDogs: Dog[]; // admin view
@@ -200,16 +93,22 @@ interface AppContextType {
   addBooking: (booking: Omit<Booking, 'id' | 'status'>) => Promise<void>;
   cancelBooking: (id: string) => Promise<void>;
   addDog: (dog: Omit<Dog, 'id'>) => Promise<void>;
+  deleteDog: (dogId: string) => Promise<void>;
   updateWalkerProfile: (walkerId: string, updates: Partial<Walker>) => Promise<void>;
   updateBookingStatus: (bookingId: string, status: 'confirmed' | 'pending' | 'rejected') => Promise<void>;
   updateUserProfileRole: (userId: string, role: 'admin' | 'client' | 'employee') => Promise<void>;
   addReview: (walkerId: string, stars: number, quote: string) => Promise<void>;
   deleteAccount: () => Promise<{ error: any }>;
+  fetchPrivateProfile: (userId: string) => Promise<any>;
+  updatePrivateProfile: (updates: { phone: string; address: string; id_number: string }) => Promise<void>;
+  getPrivateProfileForAdmin: (userId: string) => Promise<any>;
+  deleteUserAccount: (userId: string) => Promise<void>;
+  deleteWalkerProfile: (walkerId: string) => Promise<void>;
+  updateProfileAvatar: (avatarUrl: string) => Promise<void>;
   isMockMode: boolean;
   toggleMockMode: (val: boolean) => void;
   mockLogin: (role: 'admin' | 'client' | 'employee') => void;
 }
-
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -223,7 +122,7 @@ function mapDbWalker(dbWalker: any): Walker {
 
   const experience = dbWalker.experience && dbWalker.experience.length > 0 ? dbWalker.experience : [
     { icon: '✓', bg: '#dff2cc', color: '#5a8a29', title: 'Paseador de Perros Profesional Certificado', desc: 'Asociación Internacional de Profesionales Caninos (IACP)' },
-    { icon: '✚', bg: '#faeab1', color: '#9c750b', title: 'Certificado en Primeros Auxilios y RCP para Mascotas', desc: 'Certificación de la Cruz Roja (Vigente)' },
+    { icon: '✚', bg: '#faeab1', color: '#9c750b', title: 'Certificada en Primeros Auxilios y RCP para Mascotas', desc: 'Certificación de la Cruz Roja (Vigente)' },
     { icon: '★', bg: '#fcdfc3', color: '#b05f25', title: 'Más de 5 Años de Experiencia Profesional', desc: 'Más de 2500 paseos exitosos completados en San Francisco.' }
   ];
 
@@ -241,7 +140,9 @@ function mapDbWalker(dbWalker: any): Walker {
     photos,
     experience,
     reviews: dbWalker.reviews || [],
-    userId: dbWalker.user_id
+    userId: dbWalker.user_id,
+    allowedSizes: dbWalker.allowed_sizes || [],
+    specialties: dbWalker.specialties || []
   };
 }
 
@@ -251,7 +152,10 @@ function mapDbDog(dbDog: any): Dog {
     name: dbDog.name,
     breed: dbDog.breed,
     photoUrl: dbDog.photo_url,
-    userId: dbDog.user_id
+    userId: dbDog.user_id,
+    age: dbDog.age || '',
+    size: dbDog.size || 'Mediano',
+    notes: dbDog.notes || ''
   };
 }
 
@@ -284,14 +188,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Global States
   const [user, setUser] = useState<any | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [walkers, setWalkers] = useState<Walker[]>(MOCK_WALKERS);
+  const [privateProfile, setPrivateProfile] = useState<{ phone: string; address: string; id_number: string } | null>(null);
+  const [walkers, setWalkers] = useState<Walker[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [dogs, setDogs] = useState<Dog[]>([]);
   
   // Admin View States
-  const [profiles, setProfiles] = useState<Profile[]>(MOCK_PROFILES);
-  const [allBookings, setAllBookings] = useState<Booking[]>(MOCK_BOOKINGS);
-  const [allDogs, setAllDogs] = useState<Dog[]>(MOCK_DOGS);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [allBookings, setAllBookings] = useState<Booking[]>([]);
+  const [allDogs, setAllDogs] = useState<Dog[]>([]);
   
   // App Config States
   const [isLoading, setIsLoading] = useState(true);
@@ -314,9 +219,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (session?.user) {
           setUser(session.user);
           await fetchUserProfile(session.user.id);
+          await fetchPrivateProfile(session.user.id);
         } else {
           setUser(null);
           setProfile(null);
+          setPrivateProfile(null);
         }
 
         // Set up auth state change listener
@@ -324,9 +231,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
           if (session?.user) {
             setUser(session.user);
             await fetchUserProfile(session.user.id);
+            await fetchPrivateProfile(session.user.id);
           } else {
             setUser(null);
             setProfile(null);
+            setPrivateProfile(null);
           }
         });
         authListener = subscription;
@@ -334,9 +243,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       } catch (err) {
         console.warn('Supabase not connected. Defaulting to Mock Mode.', err);
         setIsMockMode(true);
-        // Default mock setup: no logged in user initially
         setUser(null);
         setProfile(null);
+        setPrivateProfile(null);
       } finally {
         setIsLoading(false);
       }
@@ -369,7 +278,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (data) {
         setProfile(mapDbProfile(data));
       } else {
-        // Fallback: try to reconstruct a profile from auth user metadata
         const { data: { session }, error: sessionErr } = await supabase.auth.getSession();
         if (sessionErr) throw sessionErr;
         const currentUser = session?.user;
@@ -379,12 +287,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
             name: currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'Usuario',
             email: currentUser.email || '',
             role: (currentUser.user_metadata?.role as 'admin' | 'client' | 'employee') || 'client',
-            avatarUrl: currentUser.user_metadata?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100',
+            avatarUrl: currentUser.user_metadata?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100&h=100',
             createdAt: currentUser.created_at
           };
           setProfile(fallbackProfile);
           
-          // Also try to insert it back into the profiles table to fix it permanently
           try {
             await supabase.from('profiles').insert({
               id: fallbackProfile.id,
@@ -403,57 +310,207 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const fetchPrivateProfile = async (userId: string) => {
+    if (isMockMode) {
+      setPrivateProfile({ phone: '', address: '', id_number: '' });
+      return { phone: '', address: '', id_number: '' };
+    }
+    try {
+      const { data, error } = await supabase
+        .from('private_profiles')
+        .select('*')
+        .eq('id', userId)
+        .maybeSingle();
+      if (error) throw error;
+      if (data) {
+        setPrivateProfile({
+          phone: data.phone || '',
+          address: data.address || '',
+          id_number: data.id_number || ''
+        });
+        return data;
+      } else {
+        const { data: newData } = await supabase
+          .from('private_profiles')
+          .insert({ id: userId, phone: '', address: '', id_number: '' })
+          .select()
+          .maybeSingle();
+        if (newData) {
+          setPrivateProfile({
+            phone: newData.phone || '',
+            address: newData.address || '',
+            id_number: newData.id_number || ''
+          });
+          return newData;
+        }
+      }
+    } catch (err) {
+      console.error('Error fetching private profile:', err);
+    }
+    return null;
+  };
+
+  const updatePrivateProfile = async (updates: { phone: string; address: string; id_number: string }) => {
+    if (isMockMode) {
+      setPrivateProfile(updates);
+      return;
+    }
+    if (!user) return;
+    try {
+      const { error } = await supabase
+        .from('private_profiles')
+        .upsert({
+          id: user.id,
+          phone: updates.phone,
+          address: updates.address,
+          id_number: updates.id_number,
+          updated_at: new Date().toISOString()
+        });
+      if (error) throw error;
+      setPrivateProfile(updates);
+    } catch (err) {
+      console.error('Error updating private profile:', err);
+    }
+  };
+
+  const getPrivateProfileForAdmin = async (userId: string) => {
+    if (isMockMode) {
+      return { phone: '+1 (555) 0123-MOCK', address: 'Calle Mock 456', id_number: '1234567-MC' };
+    }
+    try {
+      const { data, error } = await supabase
+        .from('private_profiles')
+        .select('*')
+        .eq('id', userId)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    } catch (err) {
+      console.error('Error getting private profile for admin:', err);
+      return null;
+    }
+  };
+
+  const deleteUserAccount = async (userId: string) => {
+    if (isMockMode) {
+      setProfiles(prev => prev.filter(p => p.id !== userId));
+      return;
+    }
+    try {
+      // Remove walker record first if it exists
+      await supabase.from('walkers').delete().eq('id', userId);
+      // Remove profile (cascades to dogs, bookings, private_profiles via ON DELETE CASCADE)
+      const { error } = await supabase.from('profiles').delete().eq('id', userId);
+      if (error) throw error;
+      // Also remove auth.users row via admin RPC
+      await supabase.rpc('admin_delete_user', { target_user_id: userId });
+      await fetchData();
+    } catch (err) {
+      console.error('Error deleting user account:', err);
+    }
+  };
+
+  const deleteWalkerProfile = async (walkerId: string) => {
+    if (isMockMode) {
+      setWalkers(prev => prev.filter(w => w.id !== walkerId));
+      return;
+    }
+    try {
+      const { error } = await supabase.from('walkers').delete().eq('id', walkerId);
+      if (error) throw error;
+      await fetchData();
+    } catch (err) {
+      console.error('Error deleting walker profile:', err);
+    }
+  };
+
+  const deleteDog = async (dogId: string) => {
+    if (isMockMode) {
+      setDogs(prev => prev.filter(d => d.id !== dogId));
+      setAllDogs(prev => prev.filter(d => d.id !== dogId));
+      return;
+    }
+    try {
+      const { error } = await supabase.from('dogs').delete().eq('id', dogId);
+      if (error) throw error;
+      await fetchData();
+    } catch (err) {
+      console.error('Error deleting dog:', err);
+    }
+  };
+
+  const updateProfileAvatar = async (avatarUrl: string) => {
+    if (isMockMode) {
+      if (profile) {
+        setProfile({ ...profile, avatarUrl });
+      }
+      return;
+    }
+    if (!user || !profile) return;
+    try {
+      const { error: profileErr } = await supabase
+        .from('profiles')
+        .update({ avatar_url: avatarUrl })
+        .eq('id', user.id);
+      if (profileErr) throw profileErr;
+      
+      setProfile(prev => prev ? { ...prev, avatarUrl } : null);
+      
+      if (profile.role === 'employee') {
+        await supabase
+          .from('walkers')
+          .update({ image_url: avatarUrl })
+          .eq('id', user.id);
+      }
+      
+      await fetchData();
+    } catch (err) {
+      console.error('Error updating avatar:', err);
+    }
+  };
 
   const fetchData = async () => {
     if (isMockMode) {
       setIsLoading(true);
-      // Simulate API load
       setTimeout(() => {
-        // Load appropriate mock data depending on role
         if (!profile) {
-          // Logged out: can only see walkers
-          setWalkers(MOCK_WALKERS);
+          setWalkers([]);
           setBookings([]);
           setDogs([]);
         } else if (profile.role === 'admin') {
-          setWalkers(MOCK_WALKERS);
-          setProfiles(MOCK_PROFILES);
-          setAllBookings(MOCK_BOOKINGS);
-          setAllDogs(MOCK_DOGS);
+          setWalkers([]);
+          setProfiles([]);
+          setAllBookings([]);
+          setAllDogs([]);
         } else if (profile.role === 'employee') {
-          setWalkers(MOCK_WALKERS);
-          setBookings(MOCK_BOOKINGS.filter(b => b.walkerId === profile.id || b.walkerName.toLowerCase().includes(profile.name.split(' ')[0].toLowerCase())));
-          setDogs(MOCK_DOGS);
-          setProfiles(MOCK_PROFILES);
+          setWalkers([]);
+          setBookings([]);
+          setDogs([]);
+          setProfiles([]);
         } else if (profile.role === 'client') {
-          setWalkers(MOCK_WALKERS);
-          // Filter mock dogs and bookings belonging to this client
-          setDogs(MOCK_DOGS.filter(d => d.userId === profile.id));
-          setBookings(MOCK_BOOKINGS.filter(b => b.userId === profile.id));
+          setWalkers([]);
+          setDogs([]);
+          setBookings([]);
         }
         setIsLoading(false);
-      }, 300);
+      }, 100);
       return;
     }
 
     try {
       setIsLoading(true);
       
-      // 1. Fetch Walkers (Always public)
-      const { data: dbWalkers, error: walkersErr } = await supabase
+      // 1. Fetch Walkers
+      const { data: dbWalkers } = await supabase
         .from('walkers')
         .select('*')
         .order('name', { ascending: true });
 
       if (dbWalkers) {
-        const filtered = dbWalkers
-          .map(mapDbWalker)
-          .filter(w => w.name !== 'David Chen' && w.name !== 'David Chen (Demo Walker)' && w.id !== 'david-chen' && w.id !== 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e');
-        setWalkers(filtered);
+        setWalkers(dbWalkers.map(mapDbWalker));
       }
 
       if (!profile) {
-        // Logged out
         setBookings([]);
         setDogs([]);
         setIsLoading(false);
@@ -462,7 +519,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       // 2. Fetch data depending on user role
       if (profile.role === 'client') {
-        // Fetch client's dogs
         const { data: dbDogs } = await supabase
           .from('dogs')
           .select('*')
@@ -471,7 +527,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         
         if (dbDogs) setDogs(dbDogs.map(mapDbDog));
 
-        // Fetch client's bookings
         const { data: dbBookings } = await supabase
           .from('bookings')
           .select('*')
@@ -481,8 +536,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (dbBookings) setBookings(dbBookings.map(mapDbBooking));
 
       } else if (profile.role === 'employee') {
-        // Fetch employee's assigned bookings
-        // Walker's ID is their user.id
         const { data: dbBookings } = await supabase
           .from('bookings')
           .select('*')
@@ -491,14 +544,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
         if (dbBookings) setBookings(dbBookings.map(mapDbBooking));
 
-        // Fetch all dogs so the walker can match them to client bookings
         const { data: dbDogs } = await supabase
           .from('dogs')
           .select('*')
           .order('created_at', { ascending: true });
         if (dbDogs) setDogs(dbDogs.map(mapDbDog));
 
-        // Fetch profiles so the walker can see client names
         const { data: dbProfiles } = await supabase
           .from('profiles')
           .select('*')
@@ -506,7 +557,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (dbProfiles) setProfiles(dbProfiles.map(mapDbProfile));
         
       } else if (profile.role === 'admin') {
-        // Fetch all bookings
         const { data: dbBookings } = await supabase
           .from('bookings')
           .select('*')
@@ -514,7 +564,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         
         if (dbBookings) setAllBookings(dbBookings.map(mapDbBooking));
 
-        // Fetch all dogs
         const { data: dbDogs } = await supabase
           .from('dogs')
           .select('*')
@@ -522,7 +571,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         
         if (dbDogs) setAllDogs(dbDogs.map(mapDbDog));
 
-        // Fetch all profiles
         const { data: dbProfiles } = await supabase
           .from('profiles')
           .select('*')
@@ -541,14 +589,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Auth Operations
   const login = async (email: string, password: string) => {
     if (isMockMode) {
-      // Find matching mock user
-      const match = MOCK_PROFILES.find(p => p.email === email);
-      if (match) {
-        setUser({ id: match.id, email: match.email });
-        setProfile(match);
-        return { error: null };
-      }
-      return { error: { message: 'Credenciales inválidas en modo demo. Prueba con: client@pawsandpause.com, walker@pawsandpause.com o admin@pawsandpause.com (contraseña: password123).' } };
+      return { error: { message: 'Supabase está desconectado. No es posible iniciar sesión en producción.' } };
     }
 
     try {
@@ -557,6 +598,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (data.user) {
         setUser(data.user);
         await fetchUserProfile(data.user.id);
+        await fetchPrivateProfile(data.user.id);
       }
       return { error: null };
     } catch (err: any) {
@@ -566,39 +608,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const signup = async (email: string, password: string, name: string, role: 'client' | 'employee') => {
     if (isMockMode) {
-      const newId = `mock-id-${Date.now()}`;
-      const newProf: Profile = {
-        id: newId,
-        name,
-        email,
-        role,
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100'
-      };
-      
-      MOCK_PROFILES.push(newProf);
-      
-      if (role === 'employee') {
-        const newWalker: Walker = {
-          id: newId,
-          name,
-          location: 'San Francisco, CA',
-          rating: 5.0,
-          reviewsCount: 0,
-          price: 30,
-          imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100',
-          tags: ['Paseador Nuevo'],
-          tagline: 'Llevando felicidad a tus perritos.',
-          aboutParagraphs: ['¡Hola! Soy un nuevo paseador en la plataforma.'],
-          photos: { large: '', sm1: '', sm2: '', tall: '' },
-          experience: [],
-          reviews: []
-        };
-        MOCK_WALKERS.push(newWalker);
-      }
-
-      setUser({ id: newId, email });
-      setProfile(newProf);
-      return { error: null, data: { user: { id: newId } } };
+      return { error: { message: 'Supabase está desconectado. No es posible registrar usuarios en producción.' } };
     }
 
     try {
@@ -609,7 +619,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           data: {
             name,
             role,
-            avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100'
+            avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100&h=100'
           }
         }
       });
@@ -624,32 +634,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (isMockMode) {
       setUser(null);
       setProfile(null);
+      setPrivateProfile(null);
       return;
     }
     
     await supabase.auth.signOut();
     setUser(null);
     setProfile(null);
+    setPrivateProfile(null);
   };
 
-  // Database Operations
   const addBooking = async (booking: Omit<Booking, 'id' | 'status'>) => {
     const defaultWalkerId = walkers.find(w => w.name === booking.walkerName)?.id || '';
 
     if (isMockMode) {
-      const newB: Booking = {
-        id: `mock-b-${Date.now()}`,
-        walkerName: booking.walkerName,
-        service: booking.service,
-        date: booking.date,
-        time: booking.time,
-        price: booking.price,
-        status: 'pending',
-        userId: profile?.id,
-        walkerId: defaultWalkerId
-      };
-      MOCK_BOOKINGS.push(newB);
-      await fetchData();
       return;
     }
 
@@ -676,11 +674,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const cancelBooking = async (id: string) => {
     if (isMockMode) {
-      const idx = MOCK_BOOKINGS.findIndex(b => b.id === id);
-      if (idx !== -1) {
-        MOCK_BOOKINGS.splice(idx, 1);
-      }
-      await fetchData();
       return;
     }
 
@@ -699,15 +692,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const addDog = async (dog: Omit<Dog, 'id'>) => {
     if (isMockMode) {
-      const newD: Dog = {
-        id: `mock-d-${Date.now()}`,
-        name: dog.name,
-        breed: dog.breed,
-        photoUrl: dog.photoUrl,
-        userId: profile?.id
-      };
-      MOCK_DOGS.push(newD);
-      await fetchData();
       return;
     }
 
@@ -718,7 +702,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
           name: dog.name,
           breed: dog.breed,
           photo_url: dog.photoUrl,
-          user_id: user?.id
+          user_id: user?.id,
+          age: dog.age || '',
+          size: dog.size || 'Mediano',
+          notes: dog.notes || ''
         });
 
       if (error) throw error;
@@ -730,11 +717,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const updateWalkerProfile = async (walkerId: string, updates: Partial<Walker>) => {
     if (isMockMode) {
-      const w = MOCK_WALKERS.find(walker => walker.id === walkerId);
-      if (w) {
-        Object.assign(w, updates);
-      }
-      await fetchData();
       return;
     }
 
@@ -746,6 +728,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (updates.tagline !== undefined) dbUpdates.tagline = updates.tagline;
       if (updates.aboutParagraphs !== undefined) dbUpdates.about_paragraphs = updates.aboutParagraphs;
       if (updates.imageUrl !== undefined) dbUpdates.image_url = updates.imageUrl;
+      if (updates.allowedSizes !== undefined) dbUpdates.allowed_sizes = updates.allowedSizes;
+      if (updates.specialties !== undefined) dbUpdates.specialties = updates.specialties;
 
       const { error } = await supabase
         .from('walkers')
@@ -753,6 +737,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
         .eq('id', walkerId);
 
       if (error) throw error;
+      
+      // If we are updating ourselves, update profile name as well
+      if (user && user.id === walkerId && updates.name) {
+        await supabase
+          .from('profiles')
+          .update({ name: updates.name })
+          .eq('id', user.id);
+        if (profile) {
+          setProfile({ ...profile, name: updates.name });
+        }
+      }
+
       await fetchData();
     } catch (err) {
       console.error('Failed to update walker profile:', err);
@@ -761,11 +757,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const updateBookingStatus = async (bookingId: string, status: 'confirmed' | 'pending' | 'rejected') => {
     if (isMockMode) {
-      const b = MOCK_BOOKINGS.find(booking => booking.id === bookingId);
-      if (b) {
-        b.status = status;
-      }
-      await fetchData();
       return;
     }
 
@@ -784,11 +775,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const updateUserProfileRole = async (userId: string, role: 'admin' | 'client' | 'employee') => {
     if (isMockMode) {
-      const p = MOCK_PROFILES.find(profile => profile.id === userId);
-      if (p) {
-        p.role = role;
-      }
-      await fetchData();
       return;
     }
 
@@ -800,7 +786,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
       
-      // If updating our own role, refresh profile
       if (user && user.id === userId) {
         await fetchUserProfile(userId);
       } else {
@@ -820,7 +805,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     const newReview = {
       author: profile?.name || 'Cliente',
-      avatar: profile?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100',
+      avatar: profile?.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100&h=100',
       stars: stars,
       quote: quote
     };
@@ -830,13 +815,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const newRating = Number((updatedReviews.reduce((sum, r) => sum + r.stars, 0) / newCount).toFixed(1));
 
     if (isMockMode) {
-      const mockW = MOCK_WALKERS.find(w => w.id === walkerId);
-      if (mockW) {
-        mockW.reviews = updatedReviews;
-        mockW.reviewsCount = newCount;
-        mockW.rating = newRating;
-      }
-      await fetchData();
       return;
     }
 
@@ -859,7 +837,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const deleteAccount = async (): Promise<{ error: any }> => {
     if (isMockMode) {
-      // In mock mode, just log out
       setUser(null);
       setProfile(null);
       setIsMockMode(false);
@@ -869,14 +846,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       if (!user) return { error: new Error('No user logged in') };
 
-      // Delete profile first (cascade will handle auth.users on the DB side if set up)
+      await supabase.from('walkers').delete().eq('id', user.id);
       await supabase.from('profiles').delete().eq('id', user.id);
 
-      // Delete auth user via Supabase admin function
       const { error } = await supabase.rpc('delete_user');
       if (error) {
-        // Fallback: just sign out if RPC not available
-        console.warn('delete_user RPC not available, signing out instead:', error);
+        console.warn('delete_user RPC failed:', error);
       }
 
       await logout();
@@ -886,44 +861,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       return { error: err };
     }
   };
-  // Setup mock login helper for testing
+
   const mockLogin = (role: 'admin' | 'client' | 'employee') => {
-    setIsMockMode(true);
-    let mockProf: Profile;
-    if (role === 'admin') {
-      mockProf = {
-        id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
-        name: 'Administrador Demo',
-        email: 'admin@pawsandpause.com',
-        role: 'admin',
-        avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100&h=100'
-      };
-    } else if (role === 'employee') {
-      mockProf = {
-        id: 'sarah-mitchell',
-        name: 'Sarah Mitchell',
-        email: 'walker@pawsandpause.com',
-        role: 'employee',
-        avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100&h=100'
-      };
-    } else {
-      mockProf = {
-        id: 'mock-client-id',
-        name: 'Juan Perez',
-        email: 'client@pawsandpause.com',
-        role: 'client',
-        avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100'
-      };
-    }
-    
-    setUser({ id: mockProf.id, email: mockProf.email });
-    setProfile(mockProf);
+    // Deprecated for production clean layout
   };
 
   const toggleMockMode = (val: boolean) => {
     setIsMockMode(val);
-    setUser(null);
-    setProfile(null);
   };
 
   return (
@@ -934,6 +878,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       isLoading,
       user,
       profile,
+      privateProfile,
       profiles,
       allBookings,
       allDogs,
@@ -943,11 +888,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
       addBooking,
       cancelBooking,
       addDog,
+      deleteDog,
       updateWalkerProfile,
       updateBookingStatus,
       updateUserProfileRole,
       addReview,
       deleteAccount,
+      fetchPrivateProfile,
+      updatePrivateProfile,
+      getPrivateProfileForAdmin,
+      deleteUserAccount,
+      deleteWalkerProfile,
+      updateProfileAvatar,
       isMockMode,
       toggleMockMode,
       mockLogin

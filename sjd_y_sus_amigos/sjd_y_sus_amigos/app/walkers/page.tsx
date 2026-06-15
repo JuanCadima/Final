@@ -34,7 +34,9 @@ function WalkersContent() {
       walker.name.toLowerCase().includes(query) ||
       walker.location.toLowerCase().includes(query) ||
       walker.tags.some(tag => tag.toLowerCase().includes(query)) ||
-      walker.tagline.toLowerCase().includes(query)
+      walker.tagline.toLowerCase().includes(query) ||
+      (walker.allowedSizes || []).some(s => s.toLowerCase().includes(query)) ||
+      (walker.specialties || []).some(s => s.toLowerCase().includes(query))
     );
   });
 
@@ -42,13 +44,13 @@ function WalkersContent() {
     <main className="container" style={{paddingTop: '3rem', paddingBottom: '3rem', minHeight: '80vh'}}>
       <div style={{marginBottom: '2rem'}}>
         <h1 style={{fontSize: '2.5rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)'}}>Encuentra tu Paseador Ideal</h1>
-        <p style={{color: '#666', fontSize: '1.1rem'}}>Descubre paseadores premium en tu área, cuidadosamente verificados para tu tranquilidad.</p>
+        <p style={{color: '#666', fontSize: '1.1rem'}}>Descubre paseadores premium en tu área, verificados y con capacidades especializadas.</p>
       </div>
       
       <div style={{display: 'flex', gap: '1rem', marginBottom: '2rem'}}>
         <input 
           type="text" 
-          placeholder="Busca por ubicación, nombre o etiquetas (ej. Cachorro, Activo)..." 
+          placeholder="Busca por nombre, ubicación, tamaño o especialidad (ej. Cachorro, Grande, Activo)..." 
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           style={{flex: 1, padding: '1rem', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', outline: 'none', background: '#fff', color: '#222'}}
@@ -68,7 +70,7 @@ function WalkersContent() {
         <div style={{textAlign: 'center', padding: '4rem 0', color: '#666'}}>
           <span style={{fontSize: '3rem', display: 'block', marginBottom: '1rem'}}>🔍</span>
           <h3>No se encontraron paseadores que coincidan con "{searchQuery}"</h3>
-          <p>Intenta buscar otra ubicación o especialidad de raza.</p>
+          <p>Intenta buscar otra ubicación, tamaño de perro o especialidad de cuidado.</p>
         </div>
       ) : (
         <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem'}}>
@@ -88,12 +90,23 @@ function WalkersContent() {
                     <h3 style={{margin: 0, fontSize: '1.25rem'}}>{walker.name}</h3>
                     <div style={{fontWeight: 600, color: '#222'}}>${walker.price}<span style={{fontSize: '0.8rem', color: '#666', fontWeight: 400}}>/paseo</span></div>
                   </div>
-                  <div style={{fontSize: '0.85rem', color: '#666', marginBottom: '1rem'}}>
+                  <div style={{fontSize: '0.85rem', color: '#666', marginBottom: '0.75rem'}}>
                     {walker.location} • <span style={{color: '#8a7322'}}>★ {walker.rating.toFixed(1)}</span> ({walker.reviewsCount})
                   </div>
-                  <p style={{fontSize: '0.9rem', color: '#444', marginBottom: '1.5rem', lineHeight: 1.5}}>
+                  <p style={{fontSize: '0.9rem', color: '#444', marginBottom: '0.75rem', lineHeight: 1.5}}>
                     {walker.tagline}
                   </p>
+                  {/* Capacities & Specialties Badges */}
+                  {((walker.allowedSizes && walker.allowedSizes.length > 0) || (walker.specialties && walker.specialties.length > 0)) && (
+                    <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.3rem', marginBottom: '0.75rem'}}>
+                      {(walker.allowedSizes || []).map(size => (
+                        <span key={size} style={{background: '#e3fafc', color: '#0b7285', padding: '2px 8px', borderRadius: '10px', fontSize: '0.7rem', fontWeight: 600}}>🐶 {size}</span>
+                      ))}
+                      {(walker.specialties || []).map(spec => (
+                        <span key={spec} style={{background: '#f3f0ff', color: '#6f2dbd', padding: '2px 8px', borderRadius: '10px', fontSize: '0.7rem', fontWeight: 600}}>✨ {spec}</span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
               <div style={{padding: '0 1.5rem 1.5rem 1.5rem'}}>
